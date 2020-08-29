@@ -1,6 +1,8 @@
 # Taller: Analiza datos electorales con R 
 
-### Este repositorio incluye el siguiente material .
+TEMA: PARTIPACIÓN POLÍTICA DE LAS MUJERES EN LAS ELECCIONES PROVINCIALES EN PERÚ 
+
+### Este repositorio incluye el siguiente material:
 
 * La carpeta "Base de datos"
 
