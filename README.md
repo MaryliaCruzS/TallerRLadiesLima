@@ -4,7 +4,7 @@ TEMA: PARTIPACIÓN POLÍTICA DE LAS MUJERES EN LAS ELECCIONES PROVINCIALES EN PE
 
 ### Este repositorio incluye el siguiente material:
 
-* La carpeta "Base de datos"
+* La carpeta "Bases de datos"
 
 Incluye las bases de datos de candidatos a elecciones provinciales (2002,2006,2010,2014,2018).
 
