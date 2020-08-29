@@ -1,20 +1,20 @@
-# Taller R Ladies Lima
+# Taller: Analiza datos electorales con R 
 
-**Este repositorio incluye el material  del Taller "Analiza datos electorales con R".
+### Este repositorio incluye el siguiente material .
 
-*La carpeta "Base de datos"
+* La carpeta "Base de datos"
 
 Incluye las bases de datos de candidatos a elecciones provinciales (2002,2006,2010,2014,2018).
 
-*La carpeta "Código"
+* La carpeta "Código"
 
 Incluye el archivo de script de R del código a utilizar.
 
-*La carpeta "Reporte_codigo"
+* La carpeta "Reporte_codigo"
 
 Incluye el archivo  markdown util para crear un reporte html  .
 
-*La carpeta "Presentación"
+* La carpeta "Presentación"
 
 Contiene la presentación del evento online.
 
