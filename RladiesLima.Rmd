@@ -290,15 +290,241 @@ grafico2dinamico=ggplot(Candidatos_tabla2,aes(x=anio, y=Proporcion, group=Sexo,
 grafico2dinamico+ scale_x_discrete(limits=c("2002","2006","2010","2014","2018"))
 ```
 
-
 Guardar el gif
 ```{r}
 anim_save("grafico2dinamico.gif")
 ```
 
 
+**[PREGUNTA 3: ¿En qué provincias postulan más las mujeres?](#mark)<a name="id7"></a>**
 
 
+Crear una tabla de conteo de alcaldes mujeres y varones por cada provincia
+
+```{r}
+TabladeConteo=as.data.frame(table(Candidatos$Sexo,Candidatos$anio,Candidatos$UBIGEO))
+```
+
+Crear la tabla de mujeres , y otra de varones
+
+```{r}
+CandidatAs <- subset(TabladeConteo, TabladeConteo$Var1 == "Femenino")
+CandidatOs <- subset(TabladeConteo, TabladeConteo$Var1 == "Masculino")
+```
 
 
-**[PREGUNTA 3: ¿En qué provincias postulan más las mujeres a las alcadías provinciales?](#mark)<a name="id7"></a>**
+Cambios de nombres a las bases de datos creadas.
+
+```{r}
+names(CandidatAs) <- c("Femenino", "anio","UBIGEO","FrecuenciaMujeres")
+names(CandidatOs) <- c("Masculino", "anio","UBIGEO","FrecuenciaVarones")
+```
+
+Usamos el comando "merge" para unir las dos bases anteriores entre UBIGEO y anio.
+
+```{r}
+DataConteo=merge(CandidatOs,CandidatAs,by.x=c("UBIGEO","anio"),by.y=c("UBIGEO","anio"))
+```
+
+Seleccionamos las vables que utilizaremos.
+
+```{r}
+DataConteo=select(DataConteo, UBIGEO, anio,FrecuenciaMujeres,FrecuenciaVarones)
+```
+
+Creamos una variable "el número de candidatos".
+
+```{r}
+DataConteo$FrecuenciaTotal=DataConteo$FrecuenciaMujeres+DataConteo$FrecuenciaVarones
+```
+
+Creamos las variables sobre porcentajes de mujeres candidatas y hombres candidatos
+
+```{r}
+DataConteo$Porcentaje_Mujeres=(DataConteo$FrecuenciaMujeres/DataConteo$FrecuenciaTotal)*100
+DataConteo$Porcentaje_Varones=(DataConteo$FrecuenciaVarones/DataConteo$FrecuenciaTotal)*100
+```
+
+Resumen de las variables
+
+```{r}
+summary(DataConteo$Porcentaje_Mujeres)
+summary(DataConteo$Porcentaje_Varones)
+```
+
+A los NA, les colocamos 0 . Pueden obtener 0 porque hubieron provincias nuevas creadas desde el 2002
+```{r}
+DataConteo$Porcentaje_Mujeres[is.na(DataConteo$Porcentaje_Mujeres)] = 0
+DataConteo$Porcentaje_Varones[is.na(DataConteo$Porcentaje_Varones)] = 0
+```
+
+Juntamos la data anterior con Ubigeo para saber los nombres.
+```{r}
+DataConteo=merge(DataConteo,Ubigeo,by="UBIGEO",all.x = TRUE)
+```
+Reordenamos la base de datos de mayor a menor por el Porcentaje de Mujeres. 
+Usamos el comando order para lo mencionado.
+
+
+```{r}
+DataConteo <- DataConteo[with(DataConteo, order(-DataConteo$Porcentaje_Mujeres)), ]
+```
+
+
+¿Cuales son las provincias donde más participan las mujeres en elecciones?
+  
+```{r} 
+head(DataConteo, 5)
+```
+
+Guarda la base de datos
+
+```{r} 
+library(openxlsx) #install.packages("openxlsx")
+write.xlsx(DataConteo,"DataConteo.xlsx")
+```
+
+##### GRÁFICOS BOXPLOT
+
+```{r} 
+boxplotMujeres <- ggplot(DataConteo, aes(x=0, y=Porcentaje_Mujeres))
+boxplotMujeres + geom_boxplot(aes(fill=factor(anio))) + theme_bw()+ylim(0,100)
+```
+
+```{r} 
+boxplotVarones <- ggplot(DataConteo, aes(x=0, y=Porcentaje_Varones))
+boxplotVarones + geom_boxplot(aes(fill=factor(anio))) + theme_bw()+ylim(0,100)
+```
+
+Filtremos la base de datos para obtener solo los datos del 2018. Utilizamos el comando "subset" para ello.
+
+```{r} 
+DataConteo2018 <- subset(DataConteo, DataConteo$anio == "2018")
+DataConteo2018 <- DataConteo2018[with(DataConteo2018, order(-DataConteo2018$Porcentaje_Mujeres)), ] #
+head(DataConteo2018, 5)
+```
+
+
+En Cañete, Putumayo, Sechura, Grau y Tarma son las 5 provincias con mayor porcentaje de participación de las mujeres como candidatas a regionas o alcaldesas.
+
+**[PREGUNTA 4: ¿En qué provincias postulan más las mujeres a las alcadías provinciales?](#mark)<a name="id8"></a>**
+
+
+Seleccionar un subconjuntos de datos de las mujeres candidatas al alcalde provincia.
+```{r} 
+CandidatosAalcaldes <- subset(Candidatos, Candidatos$Cargo == "ALCALDE PROVINCIAL")
+```
+
+Crear una tabla por sexo, ubigeo y anio
+```{r} 
+TablaAlcaldes=as.data.frame(table(CandidatosAalcaldes$Sexo,CandidatosAalcaldes$UBIGEO,CandidatosAalcaldes$anio))
+```
+
+Filtramos la tabla por Femenino
+```{r} 
+TablaAlcaldesAs <- subset(TablaAlcaldes, TablaAlcaldes$Var1 == "Femenino")
+```
+
+Filtramos la tabla por Masculino
+```{r} 
+TablaAlcaldEs <- subset(TablaAlcaldes, TablaAlcaldes$Var1 == "Masculino")
+```
+
+Renombramos las variables de nuevas bases de datos creadas
+```{r} 
+names(TablaAlcaldesAs) <- c("Femenino", "UBIGEO","anio","FrecuenciaMujeres")
+names(TablaAlcaldEs) <- c("Masculino", "UBIGEO","anio","FrecuenciaVarones")
+```
+
+Juntamos ambas bases de datos
+```{r} 
+DataConteoAlcades=merge(TablaAlcaldesAs,TablaAlcaldEs,by.x=c("UBIGEO","anio"),by.y=c("UBIGEO","anio"))
+```
+
+Seleccionar las variables de la bases de datos
+```{r} 
+DataConteoAlcades=select(DataConteoAlcades, UBIGEO, anio,FrecuenciaMujeres,FrecuenciaVarones)
+```
+
+Crear una nueva variable, suma de la cantidad de total de candidatos a alcaldes
+```{r} 
+DataConteoAlcades$FrecuenciaTotal=DataConteoAlcades$FrecuenciaMujeres+DataConteoAlcades$FrecuenciaVarones
+```
+
+Calcular el porcentaje de mujeres a alcaldes
+```{r} 
+DataConteoAlcades$Porcentaje_Mujeres=(DataConteoAlcades$FrecuenciaMujeres/DataConteoAlcades$FrecuenciaTotal)
+```
+
+Calcular el porcentaje de varones a alcaldes
+```{r} 
+DataConteoAlcades$Porcentaje_Varones=(DataConteoAlcades$FrecuenciaVarones/DataConteoAlcades$FrecuenciaTotal)
+```
+
+Usar el comando "merge" para juntar la base de datos por ubigeo
+```{r} 
+DataConteoAlcades=merge(DataConteoAlcades,Ubigeo,by="UBIGEO",all.x = TRUE)
+```
+
+Ordenar la base de datos de mayor a menor
+```{r} 
+DataConteoAlcades <- DataConteoAlcades[with(DataConteoAlcades, order(-DataConteoAlcades$Porcentaje_Mujeres)), ] #
+```
+
+El comando "head" muestra las cinco primeras filas.
+```{r} 
+head(DataConteoAlcades, 5)
+```
+
+Ordenar la base de datos de menor a mayor
+```{r} 
+DataConteoAlcades <- DataConteoAlcades[with(DataConteoAlcades, order(DataConteoAlcades$Porcentaje_Mujeres)), ] #
+```
+
+El comando "head" muestra las cinco primeras filas.
+```{r} 
+head(DataConteoAlcades, 5)
+```
+
+
+#### PARA GUARDAR LA BASE DATOS CREADA
+```{r} 
+##install.packages("openxlsx") 
+library(openxlsx) 
+# Se usa el comando "write.xlsx"  para guardar datos en la data de excel. 
+write.xlsx(DataConteoAlcades,"DataConteoAlcades.xlsx")
+```
+
+#### GRÁFICOS BOXPLOT
+```{r} 
+BoxplotDataConteoAlcades <- ggplot(DataConteoAlcades, aes(x=0, y=Porcentaje_Mujeres))
+BoxplotDataConteoAlcades + geom_boxplot(aes(fill=factor(anio))) + theme_bw()+ylim(0,1)
+```
+
+```{r} 
+BoxplotDataConteoAlcades <- ggplot(DataConteoAlcades, aes(x=0, y=Porcentaje_Varones))
+BoxplotDataConteoAlcades + geom_boxplot(aes(fill=factor(anio))) + theme_bw()+ylim(0,1)
+```
+
+Crear una base de datos de provincias con ninguna candidata a alcalcde
+```{r} 
+NingunaMujerCandidataAlcade=DataConteoAlcades[which(DataConteoAlcades$Porcentaje_Mujeres == 0),]
+```
+
+Filtremos la base de datos para obtener solo los datos del 2018. Utilizamos el comando "subset" para ello.
+
+```{r} 
+DataConteoAlcades2018 <- subset(DataConteoAlcades, DataConteoAlcades$anio == "2018")
+DataConteoAlcades2018 <- DataConteoAlcades2018[with(DataConteoAlcades2018, order(-DataConteoAlcades2018$Porcentaje_Mujeres)), ] #
+head(DataConteoAlcades2018, 5)
+```
+Ordenamos la base de datos según el 2018.
+```{r} 
+DataConteoAlcades2018 <- DataConteoAlcades2018[with(DataConteoAlcades2018, order(DataConteoAlcades2018$Porcentaje_Mujeres)), ] #
+head(DataConteoAlcades2018, 5)
+```
+Provincias donde no han postulado mujeres al cargo de alcades
+```{r} 
+NingunaMujerCandidataAlcade2018=DataConteoAlcades2018[which(DataConteoAlcades2018$Porcentaje_Mujeres == 0),]
+```
+

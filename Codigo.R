@@ -273,10 +273,6 @@ write.xlsx(DataConteo,"DataConteo.xlsx")
 
 ###GRÁFICOS BOXPLOT
 
-ggplot(DataConteo, aes(x=Porcentaje_Varones, colour=anio)) + geom_density()+xlim(0,100)
-
-ggplot(DataConteo, aes(x=Porcentaje_Mujeres, colour=anio)) + geom_density()+xlim(0,100)
-
 boxplotMujeres <- ggplot(DataConteo, aes(x=0, y=Porcentaje_Mujeres))
 boxplotMujeres + geom_boxplot(aes(fill=factor(anio))) + theme_bw()+ylim(0,100)
 
