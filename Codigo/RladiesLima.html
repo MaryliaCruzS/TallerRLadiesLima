@@ -2033,7 +2033,37 @@ head(DataConteoAlcades2018, 5)</code></pre>
   </script>
 </div>
 <p>Provincias donde no han postulado mujeres al cargo de alcades</p>
-<pre class="r"><code>NingunaMujerCandidataAlcade2018=DataConteoAlcades2018[which(DataConteoAlcades2018$Porcentaje_Mujeres == 0),]</code></pre>
+<pre class="r"><code>NingunaMujerCandidataAlcade2018=DataConteoAlcades2018[which(DataConteoAlcades2018$Porcentaje_Mujeres == 0),]
+NingunaMujerCandidataAlcade2018[, &quot;Provincia&quot;]</code></pre>
+<pre><code>##  [1] &quot;BAGUA&quot;                  &quot;BONGARA&quot;                &quot;CONDORCANQUI&quot;          
+##  [4] &quot;RODRIGUEZ DE MENDOZA&quot;   &quot;AIJA&quot;                   &quot;ASUNCION&quot;              
+##  [7] &quot;CORONGO&quot;                &quot;HUARI&quot;                  &quot;MARISCAL LUZURIAGA&quot;    
+## [10] &quot;PALLASCA&quot;               &quot;POMABAMBA&quot;              &quot;RECUAY&quot;                
+## [13] &quot;SIHUAS&quot;                 &quot;YUNGAY&quot;                 &quot;AYMARAES&quot;              
+## [16] &quot;CHINCHEROS&quot;             &quot;CARAVELI&quot;               &quot;LA UNION&quot;              
+## [19] &quot;CANGALLO&quot;               &quot;HUANCA SANCOS&quot;          &quot;LA MAR&quot;                
+## [22] &quot;LUCANAS&quot;                &quot;PARINACOCHAS&quot;           &quot;SUCRE&quot;                 
+## [25] &quot;VICTOR FAJARDO&quot;         &quot;VILCAS HUAMAN&quot;          &quot;CELENDIN&quot;              
+## [28] &quot;CHOTA&quot;                  &quot;CONTUMAZA&quot;              &quot;CUTERVO&quot;               
+## [31] &quot;HUALGAYOC&quot;              &quot;SAN MARCOS&quot;             &quot;SAN MIGUEL&quot;            
+## [34] &quot;SAN PABLO&quot;              &quot;SANTA CRUZ&quot;             &quot;ANTA&quot;                  
+## [37] &quot;CALCA&quot;                  &quot;CANAS&quot;                  &quot;CHUMBIVILCAS&quot;          
+## [40] &quot;PARURO&quot;                 &quot;PAUCARTAMBO&quot;            &quot;URUBAMBA&quot;              
+## [43] &quot;ANGARAES&quot;               &quot;CASTROVIRREYNA&quot;         &quot;CHURCAMPA&quot;             
+## [46] &quot;HUACAYBAMBA&quot;            &quot;YAROWILCA&quot;              &quot;CONCEPCION&quot;            
+## [49] &quot;JAUJA&quot;                  &quot;SATIPO&quot;                 &quot;ASCOPE&quot;                
+## [52] &quot;BOLIVAR&quot;                &quot;JULCAN&quot;                 &quot;OTUZCO&quot;                
+## [55] &quot;SANCHEZ CARRION&quot;        &quot;SANTIAGO DE CHUCO&quot;      &quot;GRAN CHIMU&quot;            
+## [58] &quot;CANTA&quot;                  &quot;OYON&quot;                   &quot;ALTO AMAZONAS&quot;         
+## [61] &quot;UCAYALI&quot;                &quot;DATEM DEL MARANON&quot;      &quot;MANU&quot;                  
+## [64] &quot;MARISCAL NIETO&quot;         &quot;GENERAL SANCHEZ CERRO&quot;  &quot;DANIEL ALCIDES CARRION&quot;
+## [67] &quot;AYABACA&quot;                &quot;HUANCABAMBA&quot;            &quot;SECHURA&quot;               
+## [70] &quot;CARABAYA&quot;               &quot;CHUCUITO&quot;               &quot;EL COLLAO&quot;             
+## [73] &quot;MELGAR&quot;                 &quot;MOHO&quot;                   &quot;SAN ROMAN&quot;             
+## [76] &quot;SANDIA&quot;                 &quot;YUNGUYO&quot;                &quot;MARISCAL CACERES&quot;      
+## [79] &quot;PICOTA&quot;                 &quot;TARATA&quot;                 &quot;JORGE BASADRE&quot;         
+## [82] &quot;CANDARAVE&quot;              &quot;ZARUMILLA&quot;              &quot;ATALAYA&quot;               
+## [85] &quot;PURUS&quot;</code></pre>
 </div>
 
 

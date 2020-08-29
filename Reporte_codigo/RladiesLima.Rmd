@@ -17,7 +17,8 @@ output:
 4. [Manejo de las bases de datos](#id4)
 5. [PREGUNTA 1: ¿Se ha incrementado la participación política de las mujeres en las elecciones provinciales?](#id5)
 6. [PREGUNTA 2: ¿A qué cargos postulan más las mujeres en elecciones provinciales?](#id6)
-7. [PREGUNTA 3: ¿En qué provincias postulan más las mujeres a las alcadías provinciales?"](#id7)
+7. [PREGUNTA 3: ¿En qué provincias postulan más las mujeres?"](#id7)
+8. [PREGUNTA 4: ¿En qué provincias postulan más las mujeres a las alcadías provinciales?"](#id8)
 
 
 
@@ -520,5 +521,6 @@ head(DataConteoAlcades2018, 5)
 Provincias donde no han postulado mujeres al cargo de alcades
 ```{r} 
 NingunaMujerCandidataAlcade2018=DataConteoAlcades2018[which(DataConteoAlcades2018$Porcentaje_Mujeres == 0),]
+NingunaMujerCandidataAlcade2018[, "Provincia"]
 ```
 
